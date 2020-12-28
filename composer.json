@@ -1,0 +1,22 @@
+{
+  "name": "eideasy/eideasy-php",
+  "description": "Create ASIC-E digital signature containers and add XAdES signatures to the container. Helper SDK for eID Easy API-s.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "eID Easy",
+      "email": "info@eideasy.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0|^8.0",
+    "guzzlehttp/guzzle": "*",
+    "ext-zip": "*",
+    "ext-simplexml": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "EidEasy\\": "src"
+    }
+  }
+}
