@@ -12,7 +12,9 @@
     "php": "^7.0|^8.0",
     "guzzlehttp/guzzle": "*",
     "ext-zip": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "ext-dom": "*",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

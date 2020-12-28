@@ -46,7 +46,7 @@ XML;
         foreach ($files as $fileData) {
             // Store file.
             $name        = $fileData['name'];
-            $fileContent = file_get_contents($fileData['source']);
+            $fileContent = $fileData['content'];
 
             $zip->addFromString($name, $fileContent);
 

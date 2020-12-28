@@ -12,7 +12,7 @@ class EidEasyApi
     private $secret;
     private $apiUrl;
 
-    public function __construct($clientId = null, $secret = null, $apiUrl = null)
+    public function __construct($clientId = null, $secret = null, $apiUrl = null):
     {
         $this->clientId = $clientId ?? env('EID_CLIENT_ID');
         $this->secret   = $secret ?? env('EID_SECRET');
@@ -26,22 +26,34 @@ class EidEasyApi
     }
 
     /**
+     * @param string $docId
+     */
+    public function getSignedFile(string $docId): array
+    {
+        return $this->sendRequest('/api/signatures/download-signed-file', [
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+            'doc_id'    => $docId,
+        ]);
+    }
+
+    /**
      * @param $files array
      * @param null|string $containerType
      * @param null|string $profile
      */
-    public function prepareFiles($files, $containerType = 'xades', $profile = 'LT')
+    public function prepareFiles($files, $containerType = 'xades', $profile = 'LT'): array
     {
-        return $this->sendRequest("/api/signatures/prepare-files-for-signing", [
-            'client_id'      => env('EID_CLIENT_ID'),
-            'secret'         => env('EID_SECRET'),
+        return $this->sendRequest('/api/signatures/prepare-files-for-signing', [
+            'client_id'      => $this->clientId,
+            'secret'         => $this->secret,
             'container_type' => $containerType,
             'baseline'       => $profile,
             'files'          => $files
         ]);
     }
 
-    protected function sendRequest($path, $body = [], $method = 'POST')
+    protected function sendRequest($path, $body = [], $method = 'POST'): array
     {
         try {
             if ($method === 'POST') {
@@ -69,18 +81,18 @@ class EidEasyApi
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if (!$response) {
-                return json_encode([
+                [
                     'status'  => 'error',
                     'message' => 'No response body: ' . $e->getMessage(),
-                ]);
+                ];
             }
             $body     = $response->getBody()->getContents();
             $jsonBody = json_decode($body);
             if (!$jsonBody) {
-                return json_encode([
+                return [
                     'status'  => 'error',
                     'message' => 'Response not json: ' . $body,
-                ]);
+                ];
             }
 
             return $jsonBody;
