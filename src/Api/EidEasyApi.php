@@ -1,6 +1,6 @@
 <?php
 
-namespace Eideasy\Api;
+namespace EidEasy\Api;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -12,7 +12,7 @@ class EidEasyApi
     private $secret;
     private $apiUrl;
 
-    public function __construct($clientId = null, $secret = null, $apiUrl = null):
+    public function __construct($clientId = null, $secret = null, $apiUrl = null)
     {
         $this->clientId = $clientId ?? env('EID_CLIENT_ID');
         $this->secret   = $secret ?? env('EID_SECRET');

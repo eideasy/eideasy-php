@@ -1,6 +1,6 @@
 <?php
 
-namespace Eideasy\Signatures;
+namespace EidEasy\Signatures;
 
 class Asice
 {
