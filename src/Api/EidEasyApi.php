@@ -12,17 +12,12 @@ class EidEasyApi
     private $secret;
     private $apiUrl;
 
-    public function __construct($clientId = null, $secret = null, $apiUrl = null)
+    public function __construct($guzzle, $clientId, $secret, $apiUrl = "https://id.eideasy.com")
     {
-        $this->clientId = $clientId ?? env('EID_CLIENT_ID');
-        $this->secret   = $secret ?? env('EID_SECRET');
-        $this->apiUrl   = $apiUrl ?? env('EID_API_URL', null) ?? "https://id.eideasy.com";
-
-        if (function_exists("app")) {
-            $this->guzzle = app(Client::class);
-        } else {
-            $this->guzzle = new Client();
-        }
+        $this->clientId = $clientId;
+        $this->secret   = $secret;
+        $this->apiUrl   = $apiUrl;
+        $this->guzzle   = $guzzle;
     }
 
     /**
@@ -98,6 +93,6 @@ class EidEasyApi
             return $jsonBody;
         }
 
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

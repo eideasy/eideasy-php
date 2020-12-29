@@ -11,7 +11,8 @@ class Asice
 
         $signature = new \DOMDocument();
         $signature->loadXML($xadesSignature);
-        $node = $signature->firstChild;
+        $node = $signature->firstChild; // asic:XAdESSignatures
+        $node = $node->firstChild; // ds:Signature
 
         $signatureId = $node->getAttribute('Id');
 
