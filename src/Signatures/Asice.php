@@ -4,6 +4,12 @@ namespace EidEasy\Signatures;
 
 class Asice
 {
+
+    /**
+     * @param string $containerFile existing asice container in binary form
+     * @param string $xadesSignature new signature that will be added to the container
+     * @return string Asice container in binary form with new signature added
+     */
     public function addSignatureAsice(string $containerFile, string $xadesSignature): string
     {
         $tempZipFile = tempnam(sys_get_temp_dir(), 'signature');
@@ -25,6 +31,10 @@ class Asice
         return file_get_contents($tempZipFile);
     }
 
+    /**
+     * @param array $files of files (fileName, fileContent, mimeType) that need to be signed. fileContent is in binary form.
+     * @return string Asice container in binary form
+     */
     public function createAsiceContainer(array $files): string
     {
         $zip         = new \ZipArchive();
@@ -46,15 +56,15 @@ XML;
 
         foreach ($files as $fileData) {
             // Store file.
-            $name        = $fileData['name'];
-            $fileContent = $fileData['content'];
+            $name        = $fileData['fileName'];
+            $fileContent = $fileData['fileContent'];
 
             $zip->addFromString($name, $fileContent);
 
             // Add file metadata to container manifest.xml.
             $newFileEntry = $manifest->addChild('file-entry');
             $newFileEntry->addAttribute('manifest:full-path', $name, $namespace);
-            $xmlMime = $fileData['mime'];
+            $xmlMime = $fileData['mimeType'];
             $newFileEntry->addAttribute('manifest:media-type', $xmlMime, $namespace);
         }
 

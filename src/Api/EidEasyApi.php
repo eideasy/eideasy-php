@@ -12,13 +12,51 @@ class EidEasyApi
     private $secret;
     private $apiUrl;
 
-    public function __construct($guzzle, $clientId, $secret, $apiUrl = "https://id.eideasy.com")
+    public function __construct(
+        Client $guzzle = null,
+        string $clientId = null,
+        string $secret = null,
+        string $apiUrl = "https://id.eideasy.com"
+    )
     {
         $this->clientId = $clientId;
-        $this->secret   = $secret;
-        $this->apiUrl   = $apiUrl;
-        $this->guzzle   = $guzzle;
+        $this->secret = $secret;
+        $this->apiUrl = $apiUrl;
+        $this->guzzle = $guzzle;
     }
+
+    /**
+     * @param Client|null $guzzle
+     */
+    public function setGuzzle(Client $guzzle)
+    {
+        $this->guzzle = $guzzle;
+    }
+
+    /**
+     * @param string|null $clientId
+     */
+    public function setClientId(string $clientId)
+    {
+        $this->clientId = $clientId;
+    }
+
+    /**
+     * @param string|null $secret
+     */
+    public function setSecret(string $secret)
+    {
+        $this->secret = $secret;
+    }
+
+    /**
+     * @param string $apiUrl
+     */
+    public function setApiUrl(string $apiUrl)
+    {
+        $this->apiUrl = $apiUrl;
+    }
+
 
     /**
      * @param string $docId
@@ -34,18 +72,51 @@ class EidEasyApi
 
     /**
      * @param $files array
-     * @param null|string $containerType
-     * @param null|string $profile
+     * @param array|null $parameters
      */
-    public function prepareFiles($files, $containerType = 'xades', $profile = 'LT'): array
+    public function prepareFiles(array $files, array $parameters = []): array
     {
-        return $this->sendRequest('/api/signatures/prepare-files-for-signing', [
+        $data = [
             'client_id'      => $this->clientId,
             'secret'         => $this->secret,
-            'container_type' => $containerType,
-            'baseline'       => $profile,
+            'container_type' => $parameters['container_type'] ?? 'asice',
+            'baseline'       => $parameters['baseline'] ?? 'LT',
             'files'          => $files
-        ]);
+        ];
+        if (isset($parameters['signature_redirect'])) {
+            $data['signature_redirect'] = $parameters['signature_redirect'];
+        }
+        if (isset($parameters['nodownload'])) {
+            $data['nodownload'] = true;
+        }
+        if (isset($parameters['noemails'])) {
+            $data['noemails'] = true;
+        }
+        if (isset($parameters['hide_preview_download'])) {
+            $data['hide_preview_download'] = $parameters['hide_preview_download'];
+        }
+        if (isset($parameters['email_extra'])) {
+            $data['email_extra'] = $parameters['email_extra'];
+        }
+        if (isset($parameters['notification_state'])) {
+            $data['notification_state'] = $parameters['notification_state'];
+        }
+
+        return $this->sendRequest('/api/signatures/prepare-files-for-signing', $data);
+    }
+
+    /**
+     * @param string $docId
+     */
+    public function downloadSignedFile(string $docId): array
+    {
+        $data = [
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+            'doc_id'    => $docId,
+        ];
+
+        return $this->sendRequest('/api/signatures/download-signed-file', $data);
     }
 
     protected function sendRequest($path, $body = [], $method = 'POST'): array
@@ -81,7 +152,7 @@ class EidEasyApi
                     'message' => 'No response body: ' . $e->getMessage(),
                 ];
             }
-            $body     = $response->getBody()->getContents();
+            $body = $response->getBody()->getContents();
             $jsonBody = json_decode($body);
             if (!$jsonBody) {
                 return [
