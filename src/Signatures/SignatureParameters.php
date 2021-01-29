@@ -4,13 +4,13 @@ namespace EidEasy\Signatures;
 
 class SignatureParameters
 {
-    /** @var string|null  */
+    /** @var string|null */
     private $signerName;
-    /** @var string|null  */
+    /** @var string|null */
     private $contactInfo;
-    /** @var string|null  */
+    /** @var string|null */
     private $location;
-    /** @var string|null  */
+    /** @var string|null */
     private $reason;
 
     /**

@@ -20,9 +20,9 @@ class EidEasyApi
     )
     {
         $this->clientId = $clientId;
-        $this->secret = $secret;
-        $this->apiUrl = $apiUrl;
-        $this->guzzle = $guzzle;
+        $this->secret   = $secret;
+        $this->apiUrl   = $apiUrl;
+        $this->guzzle   = $guzzle;
     }
 
     /**
@@ -57,6 +57,26 @@ class EidEasyApi
         $this->apiUrl = $apiUrl;
     }
 
+
+    public function startIdentification(string $method, array $data)
+    {
+        $params = array_merge([
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+        ], $data);
+
+        return $this->sendRequest("/api/identity/$this->clientId/$method/start", $params);
+    }
+
+    public function completeIdentification(string $method, array $data)
+    {
+        $params = array_merge([
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+        ], $data);
+
+        return $this->sendRequest("/api/identity/$this->clientId/$method/complete", $params);
+    }
 
     /**
      * @param string $docId
@@ -121,6 +141,7 @@ class EidEasyApi
 
     protected function sendRequest($path, $body = [], $method = 'POST'): array
     {
+        $body = array_map('trim', $body);
         try {
             if ($method === 'POST') {
                 $response = $this->guzzle->post($this->apiUrl . $path, [
@@ -152,13 +173,17 @@ class EidEasyApi
                     'message' => 'No response body: ' . $e->getMessage(),
                 ];
             }
-            $body = $response->getBody()->getContents();
-            $jsonBody = json_decode($body);
+            $body     = $response->getBody()->getContents();
+            $jsonBody = json_decode($body, true);
             if (!$jsonBody) {
                 return [
                     'status'  => 'error',
                     'message' => 'Response not json: ' . $body,
                 ];
+            }
+
+            if (!array_key_exists('status', $jsonBody)) {
+                $jsonBody['status'] = 'error';
             }
 
             return $jsonBody;

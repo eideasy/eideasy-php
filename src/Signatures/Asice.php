@@ -4,7 +4,6 @@ namespace EidEasy\Signatures;
 
 class Asice
 {
-
     /**
      * @param string $containerFile existing asice container in binary form
      * @param string $xadesSignature new signature that will be added to the container
