@@ -11,6 +11,7 @@ class EidEasyApi
     private $clientId;
     private $secret;
     private $apiUrl;
+    private $longPollTimeout = 120;
 
     public function __construct(
         Client $guzzle = null,
@@ -57,12 +58,20 @@ class EidEasyApi
         $this->apiUrl = $apiUrl;
     }
 
+    /**
+     * @param int $longPollTimeout
+     */
+    public function setLongPollTimeout(int $longPollTimeout)
+    {
+        $this->longPollTimeout = $longPollTimeout;
+    }
 
     public function startIdentification(string $method, array $data)
     {
         $params = array_merge([
             'client_id' => $this->clientId,
             'secret'    => $this->secret,
+            'timeout'   => $this->longPollTimeout,
         ], $data);
 
         return $this->sendRequest("/api/identity/$this->clientId/$method/start", $params);
@@ -73,6 +82,7 @@ class EidEasyApi
         $params = array_merge([
             'client_id' => $this->clientId,
             'secret'    => $this->secret,
+            'timeout'   => $this->longPollTimeout,
         ], $data);
 
         return $this->sendRequest("/api/identity/$this->clientId/$method/complete", $params);
