@@ -66,6 +66,11 @@ class EidEasyApi
         $this->longPollTimeout = $longPollTimeout;
     }
 
+    /**
+     * @param string $method that is used for identification, see list from EidEasyParams
+     * @param array $data check the API doc to see what parameters are needed for each method
+     * @return string[]
+     */
     public function startIdentification(string $method, array $data)
     {
         $params = array_merge([
@@ -77,6 +82,11 @@ class EidEasyApi
         return $this->sendRequest("/api/identity/$this->clientId/$method/start", $params);
     }
 
+    /**
+     * @param string $method that is used for identification, see list from EidEasyParams
+     * @param array $data check the API doc to see what parameters are needed for each method
+     * @return string[]
+     */
     public function completeIdentification(string $method, array $data)
     {
         $params = array_merge([
@@ -86,6 +96,28 @@ class EidEasyApi
         ], $data);
 
         return $this->sendRequest("/api/identity/$this->clientId/$method/complete", $params);
+    }
+
+    /**
+     * Will add e-Seal to the document
+     * @param $docId string returned from prepare-files-for-signing API call
+     * @return string[]
+     */
+    public function createEseal($docId)
+    {
+        $timestamp = time();
+        $uri       = "/api/signatures/e-seal/create";
+        $hmacData  = "$this->clientId$this->secret$docId$timestamp$uri";
+        $hmac      = hash_hmac('SHA256', $hmacData, $this->secret);
+        $params    = [
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+            'doc_id'    => $docId,
+            'timestamp' => $timestamp,
+            'hmac'      => $hmac,
+        ];
+
+        return $this->sendRequest($uri, $params);
     }
 
     /**
