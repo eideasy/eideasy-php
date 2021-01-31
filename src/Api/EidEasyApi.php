@@ -183,7 +183,6 @@ class EidEasyApi
 
     protected function sendRequest($path, $body = [], $method = 'POST'): array
     {
-        $body = array_map('trim', $body);
         try {
             if ($method === 'POST') {
                 $response = $this->guzzle->post($this->apiUrl . $path, [
