@@ -42,7 +42,7 @@ class Pades
      * @param string $cadesSignature is ETSI.CAdES.detached binary signature in base64 encoding to be embedded into the PDF file
      * @return array Array with signedFile property containing signed PDF in base64 encoding. error and message if call failed.
      */
-    public function addSignaturePades(string $pdfFile, string $signatureTime, string $cadesSignature, SignatureParameters $parameters = null): array
+    public function addSignaturePades(string $pdfFile, string $signatureTime, string $cadesSignature, ?array $padesDssData, SignatureParameters $parameters = null): array
     {
         $data = [
             'fileContent'    => base64_encode($pdfFile),
@@ -51,10 +51,14 @@ class Pades
         ];
 
         if ($parameters) {
-            $data['reason'] = $parameters->getReason();
+            $data['reason']      = $parameters->getReason();
             $data['contactInfo'] = $parameters->getContactInfo();
-            $data['location'] = $parameters->getLocation();
-            $data['signerName'] = $parameters->getSignerName();
+            $data['location']    = $parameters->getLocation();
+            $data['signerName']  = $parameters->getSignerName();
+        }
+
+        if ($padesDssData) {
+            $data['padesDssData'] = $padesDssData;
         }
 
         return $this->sendRequest("/api/detached-pades/complete", $data);
@@ -71,10 +75,10 @@ class Pades
         ];
 
         if ($parameters) {
-            $data['reason'] = $parameters->getReason();
+            $data['reason']      = $parameters->getReason();
             $data['contactInfo'] = $parameters->getContactInfo();
-            $data['location'] = $parameters->getLocation();
-            $data['signerName'] = $parameters->getSignerName();
+            $data['location']    = $parameters->getLocation();
+            $data['signerName']  = $parameters->getSignerName();
         }
         return $this->sendRequest("/api/detached-pades/prepare", $data);
     }
@@ -96,7 +100,7 @@ class Pades
                     'message' => 'No response body: ' . $e->getMessage(),
                 ];
             }
-            $body = $response->getBody()->getContents();
+            $body     = $response->getBody()->getContents();
             $jsonBody = json_decode($body);
             if (!$jsonBody) {
                 return [
