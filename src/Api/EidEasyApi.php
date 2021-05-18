@@ -163,6 +163,9 @@ class EidEasyApi
         if (isset($parameters['notification_state'])) {
             $data['notification_state'] = $parameters['notification_state'];
         }
+        if (isset($parameters['signer'])) {
+            $data['signer'] = $parameters['signer'];
+        }
 
         return $this->sendRequest('/api/signatures/prepare-files-for-signing', $data);
     }
