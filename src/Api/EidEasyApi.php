@@ -212,7 +212,7 @@ class EidEasyApi
         } catch (RequestException $e) {
             $response = $e->getResponse();
             if (!$response) {
-                [
+                return [
                     'status'  => 'error',
                     'message' => 'No response body: ' . $e->getMessage(),
                 ];
