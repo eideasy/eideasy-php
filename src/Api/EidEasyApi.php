@@ -11,7 +11,7 @@ class EidEasyApi
     private $clientId;
     private $secret;
     private $apiUrl;
-    private $longPollTimeout = 120;
+    private $longPollTimeout = 120000;
 
     public function __construct(
         Client $guzzle = null,
