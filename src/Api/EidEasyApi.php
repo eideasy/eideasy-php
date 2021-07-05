@@ -184,6 +184,19 @@ class EidEasyApi
         return $this->sendRequest('/api/signatures/download-signed-file', $data);
     }
 
+    /**
+     * @param string $method that is used for identification, see list from EidEasyParams
+     */
+    public function getIdCardIntegrationToken(string $method): array
+    {
+        $data = [
+            'client_id' => $this->clientId,
+            'method'    => $method,
+        ];
+
+        return $this->sendRequest('/api/signatures/integration/id-card/get-token', $data);
+    }
+
     protected function sendRequest($path, $body = [], $method = 'POST'): array
     {
         try {
