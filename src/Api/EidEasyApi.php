@@ -139,12 +139,20 @@ class EidEasyApi
     public function prepareFiles(array $files, array $parameters = []): array
     {
         $data = [
-            'client_id'      => $this->clientId,
-            'secret'         => $this->secret,
-            'container_type' => $parameters['container_type'] ?? 'asice',
-            'baseline'       => $parameters['baseline'] ?? 'LT',
-            'files'          => $files
+            'client_id'             => $this->clientId,
+            'secret'                => $this->secret,
+            'container_type'        => $parameters['container_type'] ?? 'asice',
+            'baseline'              => $parameters['baseline'] ?? 'LT',
+            'files'                 => $files,
+            'show_visual'           => $parameters['show_visual'] ?? true,
+            'nodownload'            => $parameters['nodownload'] ?? false,
+            'noemails'              => $parameters['noemails'] ?? false,
+            'hide_preview_download' => $parameters['hide_preview_download'] ?? false,
         ];
+
+        if (isset($parameters['visual_coordinates'])) {
+            $data['visual_coordinates'] = $parameters['visual_coordinates'];
+        }
         if (isset($parameters['signature_redirect'])) {
             $data['signature_redirect'] = $parameters['signature_redirect'];
         }
