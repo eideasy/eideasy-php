@@ -39,7 +39,7 @@ class Asice
         $zip         = new \ZipArchive();
         $tempZipFile = tempnam(sys_get_temp_dir(), "eideasy");
 
-        $zip->open($tempZipFile, \ZipArchive::CREATE);
+        $zip->open($tempZipFile, \ZipArchive::OVERWRITE);
         $zip->addFromString("mimetype", "application/vnd.etsi.asic-e+zip");
         $zip->addEmptyDir('META-INF');
 
