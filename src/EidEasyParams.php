@@ -2,14 +2,15 @@
 
 namespace EidEasy;
 
+/**
+ * @deprecated
+ */
 class EidEasyParams
 {
     const ZEALID_LOGIN = "zealid-login";
     const EE_IDCARD_LOGIN = "ee-id-login";
     const EE_MOBILEID_LOGIN = "mid-login";
     const LT_MOBILEID_LOGIN = "lt-mobile-id";
-    const FACEBOOK_LOGIN = "Facebook";
-    const GOOGLE_LOGIN = "Google";
     const SMARTID_LOGIN = "smartid";
     const AGRELLO_LOGIN = "agrello";
     const PT_IDCARD_LOGIN = "pt-id-login";

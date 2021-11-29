@@ -67,7 +67,7 @@ class EidEasyApi
     }
 
     /**
-     * @param string $method that is used for identification, see list from EidEasyParams
+     * @param string $method that is used for identification
      * @param array $data check the API doc to see what parameters are needed for each method
      * @return string[]
      */
@@ -83,7 +83,7 @@ class EidEasyApi
     }
 
     /**
-     * @param string $method that is used for identification, see list from EidEasyParams
+     * @param string $method that is used for identification
      * @param array $data check the API doc to see what parameters are needed for each method
      * @return string[]
      */
@@ -193,7 +193,7 @@ class EidEasyApi
     }
 
     /**
-     * @param string $method that is used for identification, see list from EidEasyParams
+     * @param string $method that is used for identification
      */
     public function getIdCardIntegrationToken(string $method): array
     {
