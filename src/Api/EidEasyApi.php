@@ -179,6 +179,43 @@ class EidEasyApi
     }
 
     /**
+     * @param string $file
+     * @param array $parameters
+     * @return string[]
+     */
+    public function prepareSignedFile(string $file, array $parameters = []): array
+    {
+        $data = [
+            'client_id'      => $this->clientId,
+            'secret'         => $this->secret,
+            'container'      => $file,
+        ];
+        if (isset($parameters['signature_redirect'])) {
+            $data['signature_redirect'] = $parameters['signature_redirect'];
+        }
+        if (isset($parameters['nodownload'])) {
+            $data['nodownload'] = true;
+        }
+        if (isset($parameters['noemails'])) {
+            $data['noemails'] = true;
+        }
+        if (isset($parameters['email_extra'])) {
+            $data['email_extra'] = $parameters['email_extra'];
+        }
+        if (isset($parameters['notification_state'])) {
+            $data['notification_state'] = $parameters['notification_state'];
+        }
+        if (isset($parameters['signer'])) {
+            $data['signer'] = $parameters['signer'];
+        }
+        if (isset($parameters['filename'])) {
+            $data['filename'] = $parameters['filename'];
+        }
+
+        return $this->sendRequest('/api/signatures/prepare-add-signature', $data);
+    }
+
+    /**
      * @param string $docId
      */
     public function downloadSignedFile(string $docId): array
