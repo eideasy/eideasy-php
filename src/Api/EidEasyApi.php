@@ -281,6 +281,9 @@ class EidEasyApi
         if (isset($parameters['signer'])) {
             $data['signer'] = $parameters['signer'];
         }
+        if (isset($parameters['lang'])) {
+            $data['lang'] = $parameters['lang'];
+        }
 
         return $data;
     }
