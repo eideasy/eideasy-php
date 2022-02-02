@@ -189,6 +189,18 @@ class EidEasyApi
     }
 
     /**
+     * @param string $docId
+     */
+    public function downloadAuditTrail(string $docId): array
+    {
+        return $this->sendRequest('/api/signatures/download-audit-trail', [
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
+            'doc_id'    => $docId,
+        ]);
+    }
+
+    /**
      * @param string $method that is used for identification
      */
     public function getIdCardIntegrationToken(string $method): array
