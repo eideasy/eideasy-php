@@ -213,6 +213,28 @@ class EidEasyApi
         return $this->sendRequest('/api/signatures/integration/id-card/get-token', $data);
     }
 
+    public function createSigningQueue(
+        string $clientId,
+        string $secret,
+        string $docId,
+        array $parameters = []
+    ) {
+        $data = [
+            'client_id' => $clientId,
+            'secret'    => $secret,
+            'doc_id'    => $docId,
+        ];
+
+        if (isset($parameters['has_management_page'])) {
+            $data['has_management_page'] = $parameters['has_management_page'];
+        }
+        if (isset($parameters['owner_email'])) {
+            $data['owner_email'] = $parameters['owner_email'];
+        }
+
+        return $this->sendRequest('/api/signatures/signing-queues', $data);
+    }
+
     protected function sendRequest($path, $body = [], $method = 'POST'): array
     {
         try {
