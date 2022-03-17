@@ -214,14 +214,12 @@ class EidEasyApi
     }
 
     public function createSigningQueue(
-        string $clientId,
-        string $secret,
         string $docId,
         array $parameters = []
     ) {
         $data = [
-            'client_id' => $clientId,
-            'secret'    => $secret,
+            'client_id' => $this->clientId,
+            'secret'    => $this->secret,
             'doc_id'    => $docId,
         ];
 
