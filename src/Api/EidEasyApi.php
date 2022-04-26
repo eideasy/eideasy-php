@@ -229,6 +229,12 @@ class EidEasyApi
         if (isset($parameters['owner_email'])) {
             $data['owner_email'] = $parameters['owner_email'];
         }
+        if (isset($parameters['webhook_url'])) {
+            $data['webhook_url'] = $parameters['webhook_url'];
+        }
+        if (isset($parameters['signers'])) {
+            $data['signers'] = $parameters['signers'];
+        }
 
         return $this->sendRequest('/api/signatures/signing-queues', $data);
     }
