@@ -322,6 +322,39 @@ class EidEasyApi
         if (isset($parameters['lang'])) {
             $data['lang'] = $parameters['lang'];
         }
+        if (isset($parameters['signature_redirect_on_fail'])) {
+            $data['signature_redirect_on_fail'] = $parameters['signature_redirect_on_fail'];
+        }
+        if (isset($parameters['signature_redirect_on_cancel'])) {
+            $data['signature_redirect_on_cancel'] = $parameters['signature_redirect_on_cancel'];
+        }
+        if (isset($parameters['signing_page_url'])) {
+            $data['signing_page_url'] = $parameters['signing_page_url'];
+        }
+        if (isset($parameters['allowed_signature_levels'])) {
+            $data['allowed_signature_levels'] = $parameters['allowed_signature_levels'];
+        }
+        if (isset($parameters['allowed_methods'])) {
+            $data['allowed_methods'] = $parameters['allowed_methods'];
+        }
+        if (isset($parameters['allowed_id_code'])) {
+            $data['allowed_id_code'] = $parameters['allowed_id_code'];
+        }
+        if (isset($parameters['return_available_methods'])) {
+            $data['return_available_methods'] = $parameters['return_available_methods'];
+        }
+        if (isset($parameters['webhook_authorization_bearer_token'])) {
+            $data['webhook_authorization_bearer_token'] = $parameters['webhook_authorization_bearer_token'];
+        }
+        if (isset($parameters['custom_visual_signature'])) {
+            $data['custom_visual_signature'] = $parameters['custom_visual_signature'];
+        }
+        if (isset($parameters['email_extra'])) {
+            $data['email_extra'] = $parameters['email_extra'];
+        }
+        if (isset($parameters['require_signing_reason'])) {
+            $data['require_signing_reason'] = $parameters['require_signing_reason'];
+        }
 
         return $data;
     }
