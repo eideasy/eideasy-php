@@ -14,7 +14,10 @@ class Pades
      * Is using application https://github.com/eideasy/eideasy-external-pades-digital-signatures
      * @param string $apiUrl - PAdES processing server url. Test environment available at https://detached-pdf.eideasy.com
      */
-    public function __construct(string $padesApiUrl = "https://detached-pdf.eideasy.com", Client $guzzle = null)
+    public function __construct(
+        string $padesApiUrl = "https://detached-pdf.eideasy.com",
+        ?Client $guzzle = null
+    )
     {
         $this->apiUrl = $padesApiUrl;
         $this->guzzle = $guzzle;
@@ -42,7 +45,7 @@ class Pades
      * @param string $cadesSignature is ETSI.CAdES.detached binary signature in base64 encoding to be embedded into the PDF file
      * @return array Array with signedFile property containing signed PDF in base64 encoding. error and message if call failed.
      */
-    public function addSignaturePades(string $pdfFile, string $signatureTime, string $cadesSignature, ?array $padesDssData, SignatureParameters $parameters = null): array
+    public function addSignaturePades(string $pdfFile, string $signatureTime, string $cadesSignature, ?array $padesDssData, ?SignatureParameters $parameters = null): array
     {
         $data = [
             'fileContent'    => base64_encode($pdfFile),
@@ -68,7 +71,7 @@ class Pades
      * @param string $pdfFile PDF file contents will need to be signed
      * @return array Array property digest that will be signed and signatureTime if success. error and message if call failed.
      */
-    public function getPadesDigest(string $pdfFile, SignatureParameters $parameters = null): array
+    public function getPadesDigest(string $pdfFile, ?SignatureParameters $parameters = null): array
     {
         $data = [
             'fileContent' => base64_encode($pdfFile),

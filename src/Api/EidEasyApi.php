@@ -14,9 +14,9 @@ class EidEasyApi
     private $longPollTimeout = 120000;
 
     public function __construct(
-        Client $guzzle = null,
-        string $clientId = null,
-        string $secret = null,
+        ?Client $guzzle = null,
+        ?string $clientId = null,
+        ?string $secret = null,
         string $apiUrl = "https://id.eideasy.com"
     )
     {
@@ -136,7 +136,7 @@ class EidEasyApi
      * @param $files array
      * @param array|null $parameters
      */
-    public function prepareFiles(array $files, array $parameters = []): array
+    public function prepareFiles(array $files, ?array $parameters = []): array
     {
         $data = [
             'client_id'             => $this->clientId,

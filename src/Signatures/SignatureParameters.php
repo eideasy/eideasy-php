@@ -20,7 +20,12 @@ class SignatureParameters
      * @param string|null $location
      * @param string|null $reason
      */
-    public function __construct($reason = null, $signerName = null, $contactInfo = null, $location = null)
+    public function __construct(
+        ?string $reason = null,
+        ?string $signerName = null,
+        ?string $contactInfo = null,
+        ?string $location = null
+    )
     {
         $this->signerName  = $signerName;
         $this->contactInfo = $contactInfo;
@@ -39,7 +44,7 @@ class SignatureParameters
     /**
      * @param string|null $signerName
      */
-    public function setSignerName(string $signerName)
+    public function setSignerName(?string $signerName)
     {
         $this->signerName = $signerName;
     }
@@ -55,7 +60,7 @@ class SignatureParameters
     /**
      * @param string|null $contactInfo
      */
-    public function setContactInfo(string $contactInfo)
+    public function setContactInfo(?string $contactInfo)
     {
         $this->contactInfo = $contactInfo;
     }
@@ -71,7 +76,7 @@ class SignatureParameters
     /**
      * @param string|null $location
      */
-    public function setLocation(string $location)
+    public function setLocation(?string $location)
     {
         $this->location = $location;
     }
@@ -87,7 +92,7 @@ class SignatureParameters
     /**
      * @param string|null $reason
      */
-    public function setReason(string $reason)
+    public function setReason(?string $reason)
     {
         $this->reason = $reason;
     }
