@@ -99,6 +99,35 @@ class EidEasyApi
     }
 
     /**
+     * @return string[]
+     */
+    public function getClientConfig(): array
+    {
+        return $this->sendRequest('/api/client-config' . $this->clientId, [
+            'secret' => $this->secret,
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getEnabledIdentificationMethods(): array
+    {
+        /** @var $config array */
+        $config = $this->getClientConfig();
+
+        $enabledIdentificationMethods = [];
+        /** @var $methodConfig array */
+        foreach ($config['login'] as $methodConfig) {
+            if ($methodConfig['enabled'] === true) {
+                $enabledIdentificationMethods[] = $methodConfig['action_type'];
+            }
+        }
+
+        return $enabledIdentificationMethods;
+    }
+
+    /**
      * Will add e-Seal to the document
      * @param $docId string returned from prepare-files-for-signing API call
      * @return string[]
