@@ -103,7 +103,7 @@ class EidEasyApi
      */
     public function getClientConfig(): array
     {
-        return $this->sendRequest('/api/client-config' . $this->clientId, [
+        return $this->sendRequest('/api/client-config/' . $this->clientId, [
             'secret' => $this->secret,
         ]);
     }
