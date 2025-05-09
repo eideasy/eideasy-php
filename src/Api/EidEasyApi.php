@@ -177,7 +177,7 @@ class EidEasyApi
             'nodownload'            => $parameters['nodownload'] ?? false,
             'noemails'              => $parameters['noemails'] ?? false,
             'hide_preview_download' => $parameters['hide_preview_download'] ?? false,
-            'callback_url'          => $parameters['callback_url'] ?? false,
+            'callback_url'          => $parameters['callback_url'] ?? null,
         ];
 
         $data = $this->addPrepareFileSigningParams($data, $parameters);
