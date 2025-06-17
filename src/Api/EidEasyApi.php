@@ -177,7 +177,6 @@ class EidEasyApi
             'nodownload'            => $parameters['nodownload'] ?? false,
             'noemails'              => $parameters['noemails'] ?? false,
             'hide_preview_download' => $parameters['hide_preview_download'] ?? false,
-            'callback_url'          => $parameters['callback_url'] ?? null,
         ];
 
         $data = $this->addPrepareFileSigningParams($data, $parameters);
@@ -384,6 +383,12 @@ class EidEasyApi
         }
         if (isset($parameters['require_signing_reason'])) {
             $data['require_signing_reason'] = $parameters['require_signing_reason'];
+        }
+        if (isset($parameters['callback_url'])) {
+            $data['callback_url'] = $parameters['callback_url'];
+        }
+        if (isset($parameters['signature_packaging'])) {
+            $data['signature_packaging'] = $parameters['signature_packaging'];
         }
 
         return $data;
