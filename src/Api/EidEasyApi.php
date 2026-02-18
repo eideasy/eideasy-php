@@ -381,8 +381,8 @@ class EidEasyApi
         if (isset($parameters['email_extra'])) {
             $data['email_extra'] = $parameters['email_extra'];
         }
-        if (isset($parameters['require_signing_reason'])) {
-            $data['require_signing_reason'] = $parameters['require_signing_reason'];
+        if (isset($parameters['signing_reason'])) {
+            $data['signing_reason'] = $parameters['signing_reason'];
         }
         if (isset($parameters['callback_url'])) {
             $data['callback_url'] = $parameters['callback_url'];
